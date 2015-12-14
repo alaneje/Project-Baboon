@@ -15,7 +15,7 @@ public class gameManager : MonoBehaviour {
 
 	public GameObject baboon;
 
-
+    public GameObject[] BaboonSpawnz;
 
 	public static bool feeding;
 
@@ -136,6 +136,14 @@ public class gameManager : MonoBehaviour {
 	{
 		if (isNight == true)
 		{
+            int Direction = Random.Range(1,4); //Chooses direction
+            //Stick this in a loop that increments depending on amount of baboons wanted?
+            BaboonSpawn Spawn = (BaboonSpawn)BaboonSpawnz[Direction].GetComponent("BaboonSpawn"); //Aquires Variable
+            Spawn.SummonBaboon();//UNLEASH TEH BBABOOONS!
+            Debug.Log("Baboon spawning from location: " + Direction.ToString()); //Confirmation
+
+           
+                /*
 			int a = 0;
 			int b = 0;
 			int c = 0;
@@ -176,6 +184,7 @@ public class gameManager : MonoBehaviour {
 					c++;
 				}
 			}
+            */
 		}
 	}
 

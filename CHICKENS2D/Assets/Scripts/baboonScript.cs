@@ -9,7 +9,7 @@ public class baboonScript : MonoBehaviour {
 
 	float speed;
 
-
+    public GameObject Goal; //The object it's aiming for on the opposite side of the screen
 	
 	// Use this for initialization
 	void Start () {
@@ -22,9 +22,9 @@ public class baboonScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		findClosestChicken ();
-		transform.Translate (closest.transform.position*speed*Time.fixedDeltaTime);
-
-		print ("closest " + closest.transform.position);
+		transform.Translate (Goal.transform.position*speed*Time.fixedDeltaTime);
+        
+		//print ("closest " + closest.transform.position);
 
 	}
 	
