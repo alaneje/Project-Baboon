@@ -26,8 +26,8 @@ public class clockScript : MonoBehaviour {
 		secondsPerSecond = 1;
 		totalGameSeconds += secondsPerSecond * Time.fixedDeltaTime;
 
-		night = true;
-		day = false;
+		night = false;
+		day = true;
 		
 	}
 	
@@ -36,17 +36,14 @@ public class clockScript : MonoBehaviour {
 
 	 
 
-		print ("hey");
+	
 
-		print ("day" + day);
-		print ("night" + night);
-
-		if ((hours >=6 && hours <=18))
+		if (((int)hours%24 >=6 && (int)hours%24 <=18))
 		{
 			day = true;
 			night = false;
 		}
-		else
+		else  if (((int)hours%24 <6)||((int)hours%24 > 18))
 		{
 			day = false;
 			night = true;

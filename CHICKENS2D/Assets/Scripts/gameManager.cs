@@ -28,6 +28,10 @@ public class gameManager : MonoBehaviour {
 
 	public int baboonCount;
 
+	public bool baboonsOut;
+
+	public GameObject Wall;
+
 	// Use this for initialization
 	void Start () {
 
@@ -66,11 +70,14 @@ public class gameManager : MonoBehaviour {
 
 		Debug.Log (baboonCount + "baboon");
 
-		if (baboonCount == 0) 
+		if (isNight == true) 
 		{
 			nightTime ();
 		}
-
+		if (isDay == true)
+		{
+			baboonsOut = false;
+		}
 	
 	}
 
@@ -121,20 +128,43 @@ public class gameManager : MonoBehaviour {
 		if ((money > 0)&& isNight == false)
 		{
 
-			if (GUI.Button(new Rect(10, 100, 80, 30), "Buy Feed"))
+			if (GUI.Button(new Rect(10, 70, 80, 30), "Buy Feed"))
 			{
 
 				feedAmount++;
 				money--;
 			}
 		}
+		if (isNight == false) 
+		{
+			if (GUI.Button(new Rect(10, 100, 80, 30), "wall top"))
+			{
+				Instantiate (Wall, new Vector2 (0, 4), Quaternion.identity);
+			}
+			if (GUI.Button(new Rect(10, 130, 80, 30), "wall bottom"))
+			{
+				
+				Instantiate (Wall, new Vector2 (0, -4), Quaternion.identity);
+			}
+			if (GUI.Button(new Rect(10, 160, 80, 30), "wall right"))
+			{
+
+				Instantiate (Wall, new Vector2 (4, 0), Quaternion.Euler (0,0,90));
+			}
+			if (GUI.Button(new Rect(10, 190, 80, 30), "wall left"))
+			{
+				
+				Instantiate (Wall, new Vector2 (-4, 0), Quaternion.Euler (0,0,90));
+			}
+		}
+
 
 
 	}
 
 	void nightTime ()
 	{
-		if (isNight == true)
+		if (isNight == true && baboonsOut == false)
 		{
             int Direction = Random.Range(1,4); //Chooses direction
             //Stick this in a loop that increments depending on amount of baboons wanted?
@@ -142,49 +172,17 @@ public class gameManager : MonoBehaviour {
             Spawn.SummonBaboon();//UNLEASH TEH BBABOOONS!
             Debug.Log("Baboon spawning from location: " + Direction.ToString()); //Confirmation
 
+			baboonCount = Random.Range (1,5);
+
+			for (int x = 0 ; x <baboonCount ; x++)
+			{
+				Spawn.SummonBaboon();//UNLEASH TEH BBABOOONS!
+			}
+
+			baboonsOut = true;
+
            
-                /*
-			int a = 0;
-			int b = 0;
-			int c = 0;
-
-			int howMany = Random.Range (1,10);
-
-			int direction = Random.Range (1,3);
-
-			if (direction == 1)
-			{
-
-				for (int x = 0; x <howMany; x++)
-				{
-
-					Instantiate(baboon, new Vector3 (-10, a, 0), Quaternion.identity);
-					a++;
-				}
-			}
-
-			if (direction == 12)
-			{
-				
-				for (int x = 0; x <howMany; x++)
-				{
-					
-					Instantiate(baboon, new Vector3 (10, b, 0), Quaternion.identity);
-					b++;
-				}
-			}
-
-			if (direction == 1)
-			{
-				
-				for (int x = 0; x <howMany; x++)
-				{
-					
-					Instantiate(baboon, new Vector3 (c-3, 10, 0), Quaternion.identity);
-					c++;
-				}
-			}
-            */
+              
 		}
 	}
 
