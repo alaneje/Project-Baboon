@@ -32,6 +32,8 @@ public class gameManager : MonoBehaviour {
 
 	public GameObject Wall;
 
+	private bool chickensOut;
+
 	// Use this for initialization
 	void Start () {
 
@@ -52,6 +54,7 @@ public class gameManager : MonoBehaviour {
 		{
 			Instantiate (chicken, new Vector3 (0,0,0), Quaternion.identity);
 		}
+
 	
 	}
 	
@@ -63,6 +66,7 @@ public class gameManager : MonoBehaviour {
 		Debug.Log (GameObject.FindGameObjectsWithTag ("Chicken").Length);
 
 		timer += Time.deltaTime;
+	
 
 	
 
@@ -72,11 +76,14 @@ public class gameManager : MonoBehaviour {
 
 		if (isNight == true) 
 		{
+			chickensOut = false;
 			nightTime ();
+
 		}
 		if (isDay == true)
 		{
 			baboonsOut = false;
+			dayTime();
 		}
 	
 	}
@@ -139,28 +146,40 @@ public class gameManager : MonoBehaviour {
 		{
 			if (GUI.Button(new Rect(10, 100, 80, 30), "wall top"))
 			{
-				Instantiate (Wall, new Vector2 (0, 4), Quaternion.identity);
+				Instantiate (Wall, new Vector2 (0, 3), Quaternion.identity);
 			}
 			if (GUI.Button(new Rect(10, 130, 80, 30), "wall bottom"))
 			{
 				
-				Instantiate (Wall, new Vector2 (0, -4), Quaternion.identity);
+				Instantiate (Wall, new Vector2 (0, -3), Quaternion.identity);
 			}
 			if (GUI.Button(new Rect(10, 160, 80, 30), "wall right"))
 			{
 
-				Instantiate (Wall, new Vector2 (4, 0), Quaternion.Euler (0,0,90));
+				Instantiate (Wall, new Vector2 (3, 0), Quaternion.Euler (0,0,90));
 			}
 			if (GUI.Button(new Rect(10, 190, 80, 30), "wall left"))
 			{
 				
-				Instantiate (Wall, new Vector2 (-4, 0), Quaternion.Euler (0,0,90));
+				Instantiate (Wall, new Vector2 (-3, 0), Quaternion.Euler (0,0,90));
 			}
 		}
 
 
 
 	}
+	void dayTime ()
+	{
+		if (isDay == true && chickensOut == false && clockScript.whichDay >0) 
+		{
+			Instantiate (chicken, new Vector3 (0, 0, 0), Quaternion.identity);
+			chickensOut = true;
+			money = money - 20;
+		}
+		
+			
+	}
+
 
 	void nightTime ()
 	{

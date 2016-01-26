@@ -11,6 +11,8 @@ public class baboonScript : MonoBehaviour {
 
 	public bool runUp;
 	float timer;
+
+	public float retreatSpeed;
 	
 	// Use this for initialization
 	void Start () {
@@ -22,6 +24,7 @@ public class baboonScript : MonoBehaviour {
 		speed = Random.Range(0.1f, 0.5f);
 		
 	}
+
 	
 	// Update is called once per frame
 	void Update ()
@@ -29,14 +32,14 @@ public class baboonScript : MonoBehaviour {
 	
 
 
-		if (transform.position == Goal.transform.position)
+		if (GetComponent<Renderer>().isVisible == false)
 		{
 			Destroy (gameObject);
 		}
-
+		
 		if (clockScript.day == true)
 		{
-			transform.Translate (startPos*speed*Time.fixedDeltaTime);
+			transform.Translate (startPos*retreatSpeed*Time.fixedDeltaTime);
 			if (GetComponent<Renderer>().isVisible == false)
 			{
 				Destroy (gameObject);
@@ -78,6 +81,12 @@ public class baboonScript : MonoBehaviour {
 
 
 		}
+
+		if (other.gameObject.tag == "Chicken")
+		{
+			Destroy (gameObject);
+		}
+
 	}
 	
 

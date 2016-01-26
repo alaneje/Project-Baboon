@@ -14,6 +14,7 @@ public class clockScript : MonoBehaviour {
 	public double years;
 
 	public static double whichHour;
+	public static double whichDay;
 	
 	public static float secondsPerSecond;
 
@@ -77,7 +78,9 @@ public class clockScript : MonoBehaviour {
 			
 		//}
 
-		whichHour = (int)hours%24;
+
+
+
 		
 		totalGameSeconds += secondsPerSecond * Time.deltaTime;
 		
@@ -87,6 +90,9 @@ public class clockScript : MonoBehaviour {
 		days = hours / 24;
 		months = days / (365/12);
 		years = months / 12;
+		whichHour = (int)hours%24;
+		whichDay = (int)days % 24;
+		print (whichHour);
 	}
 	
 	

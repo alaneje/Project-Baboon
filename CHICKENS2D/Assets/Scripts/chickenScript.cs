@@ -18,10 +18,10 @@ public class chickenScript : MonoBehaviour {
 
 	public bool fed;
 
-	double maxX = 3;
-	double minX = -3;
-	double maxY = 1;
-	double minY = -1;
+	double maxX = 2;
+	double minX = -2;
+	double maxY = 2;
+	double minY = -2;
 	
 	private float tChange = 0; // force new direction in the first Update
 	private float randomX;
