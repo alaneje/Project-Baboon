@@ -9,7 +9,8 @@ public class chickenScript : MonoBehaviour {
 	public Slider age;
 
 	public float timeSinceFeed;
-
+    public bool Infected;
+    public int InfectionRate;
 	public float moveSpeed;
 
 	public float chickenHealth;
@@ -203,6 +204,22 @@ public class chickenScript : MonoBehaviour {
 			Destroy (gameObject);
 		}
 	}
+
+    void InfectCheck()
+    {
+        int Rnd = Random.Range(InfectionRate,100000); //Randomly decides if the chickens infected or not, the higher chance of infection is boosted by Infection rate being higher.
+        if (Rnd == 99999 & Infected == false)//Checks if it was 99,999 for infection to succeed. If it's already infected it stops. 
+        {
+            Infected = true;//Infects Chicken
+        }
+    }
+    void InfectDamage()
+    {
+        if(Infected == true)//If the chicken is infected
+        {
+            chickenHealth -= 1;//Remove 1 health point.
+        }
+    }
 
 
 }
