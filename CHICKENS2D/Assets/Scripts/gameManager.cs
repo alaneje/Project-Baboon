@@ -32,7 +32,15 @@ public class gameManager : MonoBehaviour {
 
 	public GameObject Wall;
 
+
+	public GameObject wallUpgrade;
+
 	private bool chickensOut;
+
+	public bool wallTopBool;
+	public bool wallBottomBool;
+	public bool wallTopUpgrade;
+	public bool wallBottomUpgrade;
 
 	// Use this for initialization
 	void Start () {
@@ -61,9 +69,9 @@ public class gameManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		baboonCount = GameObject.FindGameObjectsWithTag("Baboon").Length;
 
-		Debug.Log (GameObject.FindGameObjectsWithTag ("Chicken").Length);
+
+    	
 
 		timer += Time.deltaTime;
 	
@@ -72,7 +80,7 @@ public class gameManager : MonoBehaviour {
 
 		feedAmountCheck = feedAmount;
 
-		Debug.Log (baboonCount + "baboon");
+	
 
 		if (isNight == true) 
 		{
@@ -111,7 +119,7 @@ public class gameManager : MonoBehaviour {
 		if ((((feedAmountCheck - (GameObject.FindGameObjectsWithTag("Chicken").Length )) >= 0)&& (feedAmount >0))&& isNight == false )
 		{
 
-			if (GUI.Button(new Rect(10, 70, 50, 30), "Feed"))
+			if (GUI.Button(new Rect(100,70, 50, 30), "Feed"))
 			{
 			
 				feedAmount = feedAmount - (GameObject.FindGameObjectsWithTag("Chicken").Length);
@@ -144,14 +152,65 @@ public class gameManager : MonoBehaviour {
 		}
 		if (isNight == false) 
 		{
-			if (GUI.Button(new Rect(10, 100, 80, 30), "wall top"))
+			if ((GUI.Button(new Rect(10, 100, 80, 30), "wall top"))&&money>10)
 			{
-				Instantiate (Wall, new Vector2 (0, 3), Quaternion.identity);
+
+				if(wallTopUpgrade == true)
+				{
+					return;
+				}
+				else if (wallTopBool == true)
+				{
+					GameObject wallUpgradeTop = Instantiate (wallUpgrade, new Vector2 (0, 3), Quaternion.identity) as GameObject;
+
+					wallUpgradeTop.gameObject.tag = "WallUpgradeTop";
+					wallTopUpgrade = true;
+					wallTopBool = false;
+
+				}
+			
+				else
+				{
+					GameObject wallTop = Instantiate (Wall, new Vector2 (0, 3), Quaternion.identity) as GameObject;
+					wallTop.gameObject.tag = "WallTop";
+				}
+
+				if(wallTopUpgrade == false)
+				{
+					wallTopBool = true;
+				}
+
+				money = money - 10;
+
 			}
-			if (GUI.Button(new Rect(10, 130, 80, 30), "wall bottom"))
-			{
+			if ((GUI.Button(new Rect(10, 130, 80, 30), "wall bottom"))&&money>10)
+			{	
+				if(wallBottomUpgrade == true)
+				{
+					return;
+				}
+				else if (wallBottomBool == true)
+				{
+					GameObject wallUpgradeBottom = Instantiate (wallUpgrade, new Vector2 (0, -3), Quaternion.identity) as GameObject;
+					
+					wallUpgradeBottom.gameObject.tag = "WallUpgradeBottom";
+					wallBottomUpgrade = true;
+					wallBottomBool = false;
+					
+				}
 				
-				Instantiate (Wall, new Vector2 (0, -3), Quaternion.identity);
+				else
+				{
+					GameObject wallBottom = Instantiate (Wall, new Vector2 (0, -3), Quaternion.identity) as GameObject;
+					wallBottom.gameObject.tag = "WallBottom";
+				}
+				
+				if(wallBottomUpgrade == false)
+				{
+					wallBottomBool = true;
+				}
+				
+				money = money - 10;
 			}
 			if (GUI.Button(new Rect(10, 160, 80, 30), "wall right"))
 			{

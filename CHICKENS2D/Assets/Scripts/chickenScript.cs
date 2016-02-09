@@ -40,6 +40,15 @@ public class chickenScript : MonoBehaviour {
 
 	public float chickenLifeMulti;
 
+	public float totalGameSeconds;
+
+	public float seconds;
+	public float minutes;
+	public float hours;
+	public float days;
+
+	public float secondsPerSecond;
+
 	void Start()
 	{
 		fed = false;
@@ -47,7 +56,7 @@ public class chickenScript : MonoBehaviour {
 		chickenHealth = 100000;
 
 
-
+		chickenAge = 0;
 
 		//camera = GetComponent<Camera> ();
 	}
@@ -121,6 +130,42 @@ public class chickenScript : MonoBehaviour {
 		}
 		// make sure the position is inside the borders
 
+		
+		if( Input.GetKeyDown(KeyCode.Alpha1))
+		{
+			secondsPerSecond = 1;
+			
+			
+		}
+
+		else if( Input.GetKeyDown(KeyCode.Alpha2))
+		{
+			secondsPerSecond = 60;
+			
+			
+		}
+
+		else if( Input.GetKeyDown(KeyCode.Alpha3))
+		{
+			secondsPerSecond = 3600;
+		}
+		
+		totalGameSeconds += secondsPerSecond * Time.deltaTime;
+		
+		seconds = totalGameSeconds;
+		minutes = totalGameSeconds / 60;
+		hours = minutes / 60;
+		days = hours / 24;
+
+		chickenAge = (int)days;
+
+		print (chickenAge);
+
+		if (chickenAge == 4)
+		{
+			Destroy (gameObject);
+		}
+
 	}
 
 
@@ -128,19 +173,19 @@ public class chickenScript : MonoBehaviour {
 	void OnMouseDown()
 	{
 
-			if (chickenAge<=10000)
+			if (chickenAge == 0)
 			{
 				gameManager.money += 10;
 			}
-			else if ((chickenAge>100000)&&(chickenAge<=200000))
+			else if (chickenAge == 1)
 			{
 				gameManager.money += 20;
 			}
-			else if ((chickenAge>200000)&&(chickenAge<=300000))
+			else if (chickenAge == 2)
 			{
 				gameManager.money += 30;
 			}
-			else
+			else if (chickenAge == 3)
 			{
 				gameManager.money += 5;
 			}

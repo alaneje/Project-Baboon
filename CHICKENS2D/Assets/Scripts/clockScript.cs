@@ -92,7 +92,7 @@ public class clockScript : MonoBehaviour {
 		years = months / 12;
 		whichHour = (int)hours%24;
 		whichDay = (int)days % 24;
-		print (whichHour);
+
 	}
 	
 	
