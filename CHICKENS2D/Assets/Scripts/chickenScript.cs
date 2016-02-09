@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 
@@ -44,7 +44,7 @@ public class chickenScript : MonoBehaviour {
 	{
 		fed = false;
 
-		chickenHealth = 345600;
+		chickenHealth = 100000;
 
 
 
@@ -56,8 +56,8 @@ public class chickenScript : MonoBehaviour {
 
 		//Vector3 screenPosition = camera.WorldToScreenPoint(transform.position);
 
-		//Health.maxValue = 345600;
-	//	Health.value = chickenHealth;
+		Health.maxValue = 100000;
+		Health.value = chickenHealth;
 
 	//	age.maxValue = 345600;
 		//age.value = chickenAge;
@@ -80,9 +80,9 @@ public class chickenScript : MonoBehaviour {
 
 			chickenHealth += chickenHealth/2;
 
-			if (chickenHealth >345600)
+			if (chickenHealth > 100000)
 			{
-				chickenHealth = 345600;
+				chickenHealth = 100000;
 			}
 
 			fed = false;
