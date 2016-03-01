@@ -49,6 +49,7 @@ public class gameManager : MonoBehaviour {
     public Text Money;
     public Text Feed;
     public Text DayNight;
+    public Button FeedButton;
     public int UpKeepCosts;
     public GameObject GameOverUI;
     private bool GameOverA;
@@ -90,10 +91,14 @@ public class gameManager : MonoBehaviour {
 	
 
 		feedAmountCheck = feedAmount;
+        if ((((feedAmountCheck - (GameObject.FindGameObjectsWithTag("Chicken").Length)) >= 0) && (feedAmount > 0)) && isNight == false)
+        {
+            FeedButton.interactable = true;
+        }
+        else { FeedButton.interactable = false; }
 
-	
 
-		if (isNight == true) 
+            if (isNight == true) 
 		{
 			chickensOut = false;
 			nightTime ();
@@ -133,7 +138,7 @@ public class gameManager : MonoBehaviour {
 			isDay = false;
 		}
 
-
+        /*
 		if ((((feedAmountCheck - (GameObject.FindGameObjectsWithTag("Chicken").Length )) >= 0)&& (feedAmount >0))&& isNight == false )
 		{
 
@@ -157,7 +162,7 @@ public class gameManager : MonoBehaviour {
 		{
 			feeding = false;
 		}
-
+        */
 		if ((money > 0)&& isNight == false)
 		{
             /*
@@ -292,6 +297,11 @@ public class gameManager : MonoBehaviour {
         money--;
     }
     public void ResetButton() { }
+    public void FeedChickens() {
+        feedAmount = feedAmount - (GameObject.FindGameObjectsWithTag("Chicken").Length);
+
+        feeding = true;
+    }
     public void BuyUpgradeWall(int Wall)
     {
 
