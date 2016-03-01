@@ -47,6 +47,8 @@ public class gameManager : MonoBehaviour {
     public Text WallLeftText;
     public Text WallRightText;
     public int UpKeepCosts;
+    public GameObject GameOverUI;
+    private bool GameOverA;
 	// Use this for initialization
 	void Start () {
 
@@ -277,10 +279,13 @@ public class gameManager : MonoBehaviour {
               
 		}
 	}
-    void GameOver() { }
+    void GameOver() {
+        GameOverUI.SetActive(true);
+        GameOverA = true;
+    }
     public void BuyFeed() {
         feedAmount++;
         money--;
     }
-
+    public void ResetButton() { }
 }
