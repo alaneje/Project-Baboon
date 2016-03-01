@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+using UnityEngine.UI;
 public class gameManager : MonoBehaviour {
 
 	public float timer;
-
+    
 	public static float money;
 
 	public float feedAmount;
@@ -41,7 +41,12 @@ public class gameManager : MonoBehaviour {
 	public bool wallBottomBool;
 	public bool wallTopUpgrade;
 	public bool wallBottomUpgrade;
-
+    private bool NewChick;
+    public Text WallUpText;
+    public Text WallDownText;
+    public Text WallLeftText;
+    public Text WallRightText;
+    public int UpKeepCosts;
 	// Use this for initialization
 	void Start () {
 
@@ -106,6 +111,7 @@ public class gameManager : MonoBehaviour {
 			GUI.TextArea (new Rect (100, 30, 50, 30), "Day");
 			isDay = true;
 			isNight = false;
+            
 		}
 		else 
 		{
@@ -142,13 +148,13 @@ public class gameManager : MonoBehaviour {
 
 		if ((money > 0)&& isNight == false)
 		{
-
+            /*
 			if (GUI.Button(new Rect(10, 70, 80, 30), "Buy Feed"))
 			{
 
 				feedAmount++;
 				money--;
-			}
+			}*/
 		}
 		if (isNight == false) 
 		{
@@ -234,6 +240,8 @@ public class gameManager : MonoBehaviour {
 			Instantiate (chicken, new Vector3 (0, 0, 0), Quaternion.identity);
 			chickensOut = true;
 			money = money - 20;
+            money -= UpKeepCosts;
+
 		}
 		
 			
@@ -264,5 +272,9 @@ public class gameManager : MonoBehaviour {
 		}
 	}
 
+    public void BuyFeed() {
+        feedAmount++;
+        money--;
+    }
 
 }
