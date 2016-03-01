@@ -49,6 +49,7 @@ public class gameManager : MonoBehaviour {
     public Text Money;
     public Text Feed;
     public Text DayNight;
+    public Slider DayTimeRemaining;
     public Button FeedButton;
     public int UpKeepCosts;
     public GameObject GameOverUI;
@@ -86,38 +87,39 @@ public class gameManager : MonoBehaviour {
 
 		timer += Time.deltaTime;
 
-        Money.text = money + " Rupee";
-        Feed.text = feedAmount + " Feed";
+        Money.text = money + " Rupee";//Shows money on the ui
+        Feed.text = feedAmount + " Feed";//Shows the feed on the ui
 	
 
 		feedAmountCheck = feedAmount;
         if ((((feedAmountCheck - (GameObject.FindGameObjectsWithTag("Chicken").Length)) >= 0) && (feedAmount > 0)) && isNight == false)
+            //Checks if the amount of feed is equal to chiccken amount and if it's daytime
         {
-            FeedButton.interactable = true;
+            FeedButton.interactable = true;//In this scenario makes the feed chicken button interactable
         }
-        else { FeedButton.interactable = false; }
+        else { FeedButton.interactable = false; }//else it's not
 
 
             if (isNight == true) 
 		{
 			chickensOut = false;
 			nightTime ();
-            DayNight.text = "Nightime";
+            DayNight.text = "Nightime";//Changes text in right hand top corner
 
 		}
 		if (isDay == true)
 		{
 			baboonsOut = false;
 			dayTime();
-            DayNight.text = "Daytime";
-		}
+            DayNight.text = "Daytime";//Changes text in right hand top corner
+        }
 
-        if(money < 1)
+        if(money < 1)//If money is less than 1 then it's game over
         {
             Debug.Log("GameOver");
             GameOver();
         }
-	
+        DayTimeRemaining.value = (int) clockScript.whichHour; //Attempt at the day time remaining on the ui. 
 	}
 
 	void OnGUI()
@@ -292,18 +294,27 @@ public class gameManager : MonoBehaviour {
         GameOverUI.SetActive(true);
         GameOverA = true;
     }
+    void WallText() { }
     public void BuyFeed() {
         feedAmount++;
         money--;
     }
     public void ResetButton() { }
     public void FeedChickens() {
-        feedAmount = feedAmount - (GameObject.FindGameObjectsWithTag("Chicken").Length);
-
-        feeding = true;
+        feedAmount = feedAmount - (GameObject.FindGameObjectsWithTag("Chicken").Length);//Feed chickens equal to amount of feed
+        feeding = true;//Feed check is true
     }
-    public void BuyUpgradeWall(int Wall)
+    public void BuyUpgradeWall(int Wall)//Un finished function for buying and upgrading walls
     {
-
+        if(Wall == 0)//Top Wall
+        {
+        }
+        if(Wall == 1)
+        { }
+        if(Wall == 2)
+        { }
+        if(Wall == 3)
+        {
+        }
     }
 }
