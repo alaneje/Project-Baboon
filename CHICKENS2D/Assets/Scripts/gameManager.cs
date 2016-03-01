@@ -98,6 +98,12 @@ public class gameManager : MonoBehaviour {
 			baboonsOut = false;
 			dayTime();
 		}
+
+        if(money < 1)
+        {
+            Debug.Log("GameOver");
+            GameOver();
+        }
 	
 	}
 
@@ -271,7 +277,7 @@ public class gameManager : MonoBehaviour {
               
 		}
 	}
-
+    void GameOver() { }
     public void BuyFeed() {
         feedAmount++;
         money--;
