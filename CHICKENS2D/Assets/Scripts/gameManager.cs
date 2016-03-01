@@ -46,6 +46,9 @@ public class gameManager : MonoBehaviour {
     public Text WallDownText;
     public Text WallLeftText;
     public Text WallRightText;
+    public Text Money;
+    public Text Feed;
+    public Text DayNight;
     public int UpKeepCosts;
     public GameObject GameOverUI;
     private bool GameOverA;
@@ -81,8 +84,9 @@ public class gameManager : MonoBehaviour {
     	
 
 		timer += Time.deltaTime;
-	
 
+        Money.text = money + " Rupee";
+        Feed.text = feedAmount + " Feed";
 	
 
 		feedAmountCheck = feedAmount;
@@ -93,12 +97,14 @@ public class gameManager : MonoBehaviour {
 		{
 			chickensOut = false;
 			nightTime ();
+            DayNight.text = "Nightime";
 
 		}
 		if (isDay == true)
 		{
 			baboonsOut = false;
 			dayTime();
+            DayNight.text = "Daytime";
 		}
 
         if(money < 1)
@@ -111,19 +117,17 @@ public class gameManager : MonoBehaviour {
 
 	void OnGUI()
 	{
-		GUI.TextArea (new Rect (10, 0, 50, 30), money.ToString());
-		GUI.TextArea (new Rect (10, 30, 50, 30), feedAmount.ToString());
+//		GUI.TextArea (new Rect (10, 0, 50, 30), money.ToString());
+//		GUI.TextArea (new Rect (10, 30, 50, 30), feedAmount.ToString());
 
 		if ( clockScript.day == true)
 		{
-			GUI.TextArea (new Rect (100, 30, 50, 30), "Day");
 			isDay = true;
 			isNight = false;
             
 		}
 		else 
 		{
-			GUI.TextArea (new Rect (100,30, 50,30), "Night");
 
 			isNight = true;
 			isDay = false;
@@ -288,4 +292,8 @@ public class gameManager : MonoBehaviour {
         money--;
     }
     public void ResetButton() { }
+    public void BuyUpgradeWall(int Wall)
+    {
+
+    }
 }
