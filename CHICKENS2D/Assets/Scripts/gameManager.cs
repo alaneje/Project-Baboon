@@ -299,7 +299,7 @@ public class gameManager : MonoBehaviour {
         feedAmount++;
         money--;
     }
-    public void ResetButton() { }
+    public void ResetButton() { Application.LoadLevel(0); }
     public void FeedChickens() {
         feedAmount = feedAmount - (GameObject.FindGameObjectsWithTag("Chicken").Length);//Feed chickens equal to amount of feed
         feeding = true;//Feed check is true
