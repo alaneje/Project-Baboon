@@ -82,7 +82,7 @@ public class gameManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-
+        WallButtonControll();//Managers wall buttons
 
     	
 
@@ -304,9 +304,22 @@ public class gameManager : MonoBehaviour {
     }
     void WallButtonControll()
     {
-        if(isNight == false)
+        if(isNight == false)//Sets buttons to be active during day
         {
-            
+            WallButtonManager[0].interactable = true;
+            WallButtonManager[1].interactable = true;
+            WallButtonManager[2].interactable = true;
+            WallButtonManager[3].interactable = true;
+
         }
+        if (isNight == true)//Disables during night
+        {
+            WallButtonManager[0].interactable = false;
+            WallButtonManager[1].interactable = false;
+            WallButtonManager[2].interactable = false;
+            WallButtonManager[3].interactable = false;
+
+        }
+
     }
 }
