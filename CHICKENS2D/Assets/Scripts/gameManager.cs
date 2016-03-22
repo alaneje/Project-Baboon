@@ -180,32 +180,6 @@ public class gameManager : MonoBehaviour {
 			if ((GUI.Button(new Rect(10, 100, 80, 30), "wall top"))&&money>10)
 			{
 
-				if(wallTopUpgrade == true)
-				{
-					return;
-				}
-				else if (wallTopBool == true)
-				{
-					GameObject wallUpgradeTop = Instantiate (wallUpgrade, new Vector2 (0, 3), Quaternion.identity) as GameObject;
-
-					wallUpgradeTop.gameObject.tag = "WallUpgradeTop";
-					wallTopUpgrade = true;
-					wallTopBool = false;
-
-				}
-			
-				else
-				{
-					GameObject wallTop = Instantiate (Wall, new Vector2 (0, 3), Quaternion.identity) as GameObject;
-					wallTop.gameObject.tag = "WallTop";
-				}
-
-				if(wallTopUpgrade == false)
-				{
-					wallTopBool = true;
-				}
-
-				money = money - 10;
 
 			}
 			if ((GUI.Button(new Rect(10, 130, 80, 30), "wall bottom"))&&money>10)
@@ -304,16 +278,43 @@ public class gameManager : MonoBehaviour {
         feedAmount = feedAmount - (GameObject.FindGameObjectsWithTag("Chicken").Length);//Feed chickens equal to amount of feed
         feeding = true;//Feed check is true
     }
-    public void BuyUpgradeWall(int Wall)//Un finished function for buying and upgrading walls
+    public void BuyUpgradeWall(int WallNum)//Un finished function for buying and upgrading walls
     {
-        if(Wall == 0)//Top Wall
+        if(WallNum == 0)//Top Wall
         {
+
+            if (wallTopUpgrade == true)
+            {
+                return;
+            }
+            else if (wallTopBool == true)
+            {
+                GameObject wallUpgradeTop = Instantiate(wallUpgrade, new Vector2(0, 3), Quaternion.identity) as GameObject;
+
+                wallUpgradeTop.gameObject.tag = "WallUpgradeTop";
+                wallTopUpgrade = true;
+                wallTopBool = false;
+
+            }
+
+            else
+            {
+                GameObject wallTop = Instantiate(Wall, new Vector2(0, 3), Quaternion.identity) as GameObject;
+                wallTop.gameObject.tag = "WallTop";
+            }
+
+            if (wallTopUpgrade == false)
+            {
+                wallTopBool = true;
+            }
+
+            money = money - 10;
         }
-        if(Wall == 1)
+        if(WallNum == 1)//Bottom Wall
         { }
-        if(Wall == 2)
+        if(WallNum == 2)//Right Wall
         { }
-        if(Wall == 3)
+        if(WallNum == 3)//Left Wall
         {
         }
     }
