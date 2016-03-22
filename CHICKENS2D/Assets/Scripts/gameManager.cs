@@ -51,6 +51,7 @@ public class gameManager : MonoBehaviour {
     public Text DayNight;
     public Slider DayTimeRemaining;
     public Button FeedButton;
+    public Button[] WallButtonManager;
     public int UpKeepCosts;
     public GameObject GameOverUI;
     private bool GameOverA;
@@ -175,53 +176,6 @@ public class gameManager : MonoBehaviour {
 				money--;
 			}*/
 		}
-		if (isNight == false) 
-		{
-			if ((GUI.Button(new Rect(10, 100, 80, 30), "wall top"))&&money>10)
-			{
-
-
-			}
-			if ((GUI.Button(new Rect(10, 130, 80, 30), "wall bottom"))&&money>10)
-			{	
-				if(wallBottomUpgrade == true)
-				{
-					return;
-				}
-				else if (wallBottomBool == true)
-				{
-					GameObject wallUpgradeBottom = Instantiate (wallUpgrade, new Vector2 (0, -3), Quaternion.identity) as GameObject;
-					
-					wallUpgradeBottom.gameObject.tag = "WallUpgradeBottom";
-					wallBottomUpgrade = true;
-					wallBottomBool = false;
-					
-				}
-				
-				else
-				{
-					GameObject wallBottom = Instantiate (Wall, new Vector2 (0, -3), Quaternion.identity) as GameObject;
-					wallBottom.gameObject.tag = "WallBottom";
-				}
-				
-				if(wallBottomUpgrade == false)
-				{
-					wallBottomBool = true;
-				}
-				
-				money = money - 10;
-			}
-			if (GUI.Button(new Rect(10, 160, 80, 30), "wall right"))
-			{
-
-				Instantiate (Wall, new Vector2 (3, 0), Quaternion.Euler (0,0,90));
-			}
-			if (GUI.Button(new Rect(10, 190, 80, 30), "wall left"))
-			{
-				
-				Instantiate (Wall, new Vector2 (-3, 0), Quaternion.Euler (0,0,90));
-			}
-		}
 
 
 
@@ -311,11 +265,48 @@ public class gameManager : MonoBehaviour {
             money = money - 10;
         }
         if(WallNum == 1)//Bottom Wall
-        { }
-        if(WallNum == 2)//Right Wall
-        { }
-        if(WallNum == 3)//Left Wall
         {
+            if (wallBottomUpgrade == true)
+            {
+                return;
+            }
+            else if (wallBottomBool == true)
+            {
+                GameObject wallUpgradeBottom = Instantiate(wallUpgrade, new Vector2(0, -3), Quaternion.identity) as GameObject;
+
+                wallUpgradeBottom.gameObject.tag = "WallUpgradeBottom";
+                wallBottomUpgrade = true;
+                wallBottomBool = false;
+
+            }
+
+            else
+            {
+                GameObject wallBottom = Instantiate(Wall, new Vector2(0, -3), Quaternion.identity) as GameObject;
+                wallBottom.gameObject.tag = "WallBottom";
+            }
+
+            if (wallBottomUpgrade == false)
+            {
+                wallBottomBool = true;
+            }
+
+            money = money - 10;
+        }
+        if(WallNum == 2)//Right Wall
+        {
+            Instantiate(Wall, new Vector2(3, 0), Quaternion.Euler(0, 0, 90));
+        }
+        if (WallNum == 3)//Left Wall
+        {
+            Instantiate(Wall, new Vector2(-3, 0), Quaternion.Euler(0, 0, 90));
+        }
+    }
+    void WallButtonControll()
+    {
+        if(isNight == false)
+        {
+            
         }
     }
 }
