@@ -79,6 +79,19 @@ public class chickenScript : MonoBehaviour {
 
 		chickenAge = (int)chickenAgeFloat;
 
+		if ((clockScript.whichHour == 8) || (clockScript.whichHour == 16))
+		{
+			InfectCheck();
+		}
+
+		if (Infected == true) {
+			GetComponent <SpriteRenderer> ().color = Color.red;
+		}
+
+		InfectDamage ();
+
+
+
 		if (gameManager.feeding == true) {
 			fed = true;
 		}
@@ -173,6 +186,10 @@ public class chickenScript : MonoBehaviour {
 
 	void OnMouseDown()
 	{
+		if (Infected == true)
+		{
+			Destroy (gameObject);
+		}
 
 			if (chickenAge == 0)
 			{
