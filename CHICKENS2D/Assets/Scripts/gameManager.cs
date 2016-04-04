@@ -32,16 +32,12 @@ public class gameManager : MonoBehaviour {
 
 	public GameObject Wall;
 
-
 	public GameObject wallUpgrade;
 
 	private bool chickensOut;
 
-	public bool wallTopBool;
-	public bool wallBottomBool;
-	public bool wallTopUpgrade;
-	public bool wallBottomUpgrade;
     private bool NewChick;
+
     public Text WallUpText;
     public Text WallDownText;
     public Text WallLeftText;
@@ -52,6 +48,7 @@ public class gameManager : MonoBehaviour {
     public Slider DayTimeRemaining;
     public Button FeedButton;
     public Button[] WallButtonManager;
+    public GameObject[] Walls;
     public int UpKeepCosts;
     public GameObject GameOverUI;
     private bool GameOverA;
@@ -83,7 +80,7 @@ public class gameManager : MonoBehaviour {
 	void Update () {
 
         WallButtonControll();//Managers wall buttons
-
+        WallText();
     	
 
 		timer += Time.deltaTime;
@@ -123,63 +120,6 @@ public class gameManager : MonoBehaviour {
         DayTimeRemaining.value = (int) clockScript.whichHour; //Attempt at the day time remaining on the ui. 
 	}
 
-	void OnGUI()
-	{
-//		GUI.TextArea (new Rect (10, 0, 50, 30), money.ToString());
-//		GUI.TextArea (new Rect (10, 30, 50, 30), feedAmount.ToString());
-
-		if ( clockScript.day == true)
-		{
-			isDay = true;
-			isNight = false;
-            
-		}
-		else 
-		{
-
-			isNight = true;
-			isDay = false;
-		}
-
-        /*
-		if ((((feedAmountCheck - (GameObject.FindGameObjectsWithTag("Chicken").Length )) >= 0)&& (feedAmount >0))&& isNight == false )
-		{
-
-			if (GUI.Button(new Rect(100,70, 50, 30), "Feed"))
-			{
-			
-				feedAmount = feedAmount - (GameObject.FindGameObjectsWithTag("Chicken").Length);
-
-				feeding = true;
-			}
-			else
-			{
-				feeding = false;
-			}
-
-
-
-
-		}
-		else
-		{
-			feeding = false;
-		}
-        */
-		if ((money > 0)&& isNight == false)
-		{
-            /*
-			if (GUI.Button(new Rect(10, 70, 80, 30), "Buy Feed"))
-			{
-
-				feedAmount++;
-				money--;
-			}*/
-		}
-
-
-
-	}
 	void dayTime ()
 	{
 		if (isDay == true && chickensOut == false && clockScript.whichDay >0) 
@@ -222,7 +162,20 @@ public class gameManager : MonoBehaviour {
         GameOverUI.SetActive(true);
         GameOverA = true;
     }
-    void WallText() { }
+    void WallText()//Sets the text on the wall buttons
+    {
+        if(Walls[0] == null) { WallUpText.text = "Buy Wall (8 Rupees, 10 Health)"; }
+        if (Walls[1] == null) { WallDownText.text = "Buy Wall (8 Rupees, 10 Health)"; }
+        if (Walls[2] == null) { WallRightText.text = "Buy Wall (8 Rupees, 10 Health)"; }
+        if (Walls[3] == null) { WallLeftText.text = "Buy Wall (8 Rupees, 10 Health)"; }
+
+        if (Walls[0] != null) { WallUpText.text = "Upgrade/Repair Wall (8 Rupees, 10 Health)"; }
+        if (Walls[1] != null) { WallDownText.text = "Upgrade/Repair Wall (8 Rupees, 10 Health)"; }
+        if (Walls[2] != null) { WallRightText.text = "Upgrade/Repair Wall (8 Rupees, 10 Health)"; }
+        if (Walls[3] != null) { WallLeftText.text = "Upgrade/Repair Wall (8 Rupees, 10 Health)"; }
+
+
+    }
     public void BuyFeed() {
         feedAmount++;
         money--;
@@ -237,69 +190,62 @@ public class gameManager : MonoBehaviour {
         if(WallNum == 0)//Top Wall
         {
 
-            if (wallTopUpgrade == true)
+            if (Walls[0] == null)//Checks if the walls around, if it is then it just needs upgrading
             {
-                return;
+                Walls[0] = Instantiate(Wall, new Vector2(0, 3), Quaternion.identity) as GameObject;//makes the wall
+                Walls[0].gameObject.tag = "WallTop";//Tags the wall
             }
-            else if (wallTopBool == true)
-            {
-                GameObject wallUpgradeTop = Instantiate(wallUpgrade, new Vector2(0, 3), Quaternion.identity) as GameObject;
-
-                wallUpgradeTop.gameObject.tag = "WallUpgradeTop";
-                wallTopUpgrade = true;
-                wallTopBool = false;
-
-            }
-
             else
             {
-                GameObject wallTop = Instantiate(Wall, new Vector2(0, 3), Quaternion.identity) as GameObject;
-                wallTop.gameObject.tag = "WallTop";
+                wallScript Wal = (wallScript)Walls[0].GetComponent("wallScript");///Grabs the wall script
+                Wal.life += 10;//Upgrades the life
             }
-
-            if (wallTopUpgrade == false)
-            {
-                wallTopBool = true;
-            }
-
-            money = money - 10;
+            money = money - 8;//Revokes money spent
         }
         if(WallNum == 1)//Bottom Wall
         {
-            if (wallBottomUpgrade == true)
+            if (Walls[1] == null)
             {
-                return;
+                Walls[1] = Instantiate(Wall, new Vector2(0, -3), Quaternion.identity) as GameObject;
+                Walls[1].gameObject.tag = "WallUpgradeBottom";
             }
-            else if (wallBottomBool == true)
-            {
-                GameObject wallUpgradeBottom = Instantiate(wallUpgrade, new Vector2(0, -3), Quaternion.identity) as GameObject;
-
-                wallUpgradeBottom.gameObject.tag = "WallUpgradeBottom";
-                wallBottomUpgrade = true;
-                wallBottomBool = false;
-
-            }
-
             else
             {
-                GameObject wallBottom = Instantiate(Wall, new Vector2(0, -3), Quaternion.identity) as GameObject;
-                wallBottom.gameObject.tag = "WallBottom";
+                wallScript Wal = (wallScript)Walls[1].GetComponent("wallScript");
+                Wal.life += 10;
             }
 
-            if (wallBottomUpgrade == false)
-            {
-                wallBottomBool = true;
-            }
+            money = money - 8;
 
-            money = money - 10;
         }
         if(WallNum == 2)//Right Wall
         {
-            Instantiate(Wall, new Vector2(3, 0), Quaternion.Euler(0, 0, 90));
+            if (Walls[2] == null)
+            {
+                Walls[2] = Instantiate(Wall, new Vector2(3, 0), Quaternion.Euler(0, 0, 90)) as GameObject;
+                Walls[2].gameObject.tag = "WallUpgradeRight";
+            }
+            else
+            {
+                wallScript Wal = (wallScript)Walls[2].GetComponent("wallScript");
+                Wal.life += 10;
+            }
+            money = money - 8;
+
         }
         if (WallNum == 3)//Left Wall
         {
-            Instantiate(Wall, new Vector2(-3, 0), Quaternion.Euler(0, 0, 90));
+            if (Walls[3] == null)
+            {
+                Walls[3] = Instantiate(Wall, new Vector2(-3, 0), Quaternion.Euler(0, 0, 90)) as GameObject;
+                Walls[3].gameObject.tag = "WallUpgradeLeft";
+            }
+            else
+            {
+                wallScript Wal = (wallScript)Walls[3].GetComponent("wallScript");
+                Wal.life += 10;
+            }
+            money = money - 8; 
         }
     }
     void WallButtonControll()
