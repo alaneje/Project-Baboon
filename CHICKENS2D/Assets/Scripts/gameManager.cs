@@ -45,6 +45,7 @@ public class gameManager : MonoBehaviour {
     public Text Money;
     public Text Feed;
     public Text DayNight;
+    public Text[] Console;
     public Slider DayTimeRemaining;
     public Button FeedButton;
     public Button[] WallButtonManager;
@@ -52,6 +53,8 @@ public class gameManager : MonoBehaviour {
     public int UpKeepCosts;
     public GameObject GameOverUI;
     private bool GameOverA;
+    private float CTimer;
+    public Camera Cam;
 	// Use this for initialization
 	void Start () {
 
@@ -73,7 +76,8 @@ public class gameManager : MonoBehaviour {
 			Instantiate (chicken, new Vector3 (0,0,0), Quaternion.identity);
 		}
 
-	
+        TerminateConsole();
+	    
 	}
 	
 	// Update is called once per frame
@@ -82,7 +86,8 @@ public class gameManager : MonoBehaviour {
         WallButtonControll();//Managers wall buttons
         WallText();
     	
-
+        if(CTimer > 0) { CTimer -= Time.deltaTime; }
+        if(CTimer < 1) { TerminateConsole();CTimer = 0; }
 		timer += Time.deltaTime;
 
         Money.text = money + " Rupee";//Shows money on the ui
@@ -267,5 +272,22 @@ public class gameManager : MonoBehaviour {
 
         }
 
+    }
+    public void UpdateConsole(string Line1, string Line2, string Line3)
+    {
+        Console[0].text = Line1;
+        Console[1].text = Line2;
+        Console[2].text = Line3;
+        CTimer = 4;
+    }
+    void TerminateConsole()
+    {
+        Console[0].text = "";
+        Console[1].text = "";
+        Console[2].text = "";
+    }
+    void ChangeViewSize(int Size)
+    {
+        Cam.orthographicSize = Size;//Changes the camera size for different views
     }
 }
