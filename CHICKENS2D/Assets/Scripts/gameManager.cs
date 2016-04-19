@@ -55,8 +55,12 @@ public class gameManager : MonoBehaviour {
     private bool GameOverA;
     private float CTimer;
     public Camera Cam;
-	// Use this for initialization
-	void Start () {
+    public double seconds;
+    public double minutes;
+    public double hours;
+    public clockScript Ct;
+    // Use this for initialization
+    void Start () {
 
 		timer = 0;
 
@@ -85,7 +89,7 @@ public class gameManager : MonoBehaviour {
 
         WallButtonControll();//Managers wall buttons
         WallText();
-    	
+        TimeManager();
         if(CTimer > 0) { CTimer -= Time.deltaTime; }
         if(CTimer < 1) { TerminateConsole();CTimer = 0; }
 		timer += Time.deltaTime;
@@ -289,5 +293,13 @@ public class gameManager : MonoBehaviour {
     void ChangeViewSize(int Size)
     {
         Cam.orthographicSize = Size;//Changes the camera size for different views
+    }
+    void TimeManager()
+    {
+       
+        if(Ct.hoursinday > 19) { DayTimeRemaining.gameObject.SetActive(false); }
+        if(Ct.hoursinday < 19) { DayTimeRemaining.gameObject.SetActive(true); }
+        DayTimeRemaining.value = (int) Ct.hoursinday;
+
     }
 }
