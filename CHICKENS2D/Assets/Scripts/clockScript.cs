@@ -9,6 +9,7 @@ public class clockScript : MonoBehaviour {
 	public double seconds;
 	public double minutes;
 	public double hours;
+    public double hoursinday;
 	public double days;
 	public double months;
 	public double years;
@@ -87,7 +88,9 @@ public class clockScript : MonoBehaviour {
 		seconds = totalGameSeconds;
 		minutes = totalGameSeconds / 60;
 		hours = minutes / 60;
-		days = hours / 24;
+       hours= minutes / 60;
+        hoursinday = (int)hours % 24;
+        days = hours / 24;
 		months = days / (365/12);
 		years = months / 12;
 		whichHour = (int)hours%24;
