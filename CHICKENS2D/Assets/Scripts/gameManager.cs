@@ -48,6 +48,7 @@ public class gameManager : MonoBehaviour {
     public Text[] Console;
     public Slider DayTimeRemaining;
     public Button FeedButton;
+	public Button FeedBuyBut;
     public Button[] WallButtonManager;
     public GameObject[] Walls;
     public int UpKeepCosts;
@@ -59,6 +60,10 @@ public class gameManager : MonoBehaviour {
     public double minutes;
     public double hours;
     public clockScript Ct;
+
+
+
+	public int timerCount;
     // Use this for initialization
     void Start () {
 
@@ -72,7 +77,7 @@ public class gameManager : MonoBehaviour {
 
 		feeding = false;
 
-		isDay = false;
+		isDay = true;
 		isNight = false;
 
 		for (int x = 0; x <chickenStartAmount; x++)
@@ -81,17 +86,35 @@ public class gameManager : MonoBehaviour {
 		}
 
         TerminateConsole();
+
+		ChangeViewSize (5);
 	    
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
+		if (clockScript.day == true) {
+			isDay = true;
+			isNight = false;
+		}
+		else
+		{
+			isDay = false;
+			isNight = true;
+		}
+
+		if (money <= 1||isDay == false) {
+			FeedBuyBut.interactable = false;
+		} else {
+			FeedBuyBut.interactable = true;
+		}
+
         WallButtonControll();//Managers wall buttons
         WallText();
-        TimeManager();
-        if(CTimer > 0) { CTimer -= Time.deltaTime; }
-        if(CTimer < 1) { TerminateConsole();CTimer = 0; }
+       //TimeManager();
+       //if(CTimer > 0) { CTimer -= Time.deltaTime; }
+       // if(CTimer < 1) { TerminateConsole();CTimer = 0; }
 		timer += Time.deltaTime;
 
         Money.text = money + " Rupee";//Shows money on the ui
@@ -102,12 +125,12 @@ public class gameManager : MonoBehaviour {
         if ((((feedAmountCheck - (GameObject.FindGameObjectsWithTag("Chicken").Length)) >= 0) && (feedAmount > 0)) && isNight == false)
             //Checks if the amount of feed is equal to chiccken amount and if it's daytime
         {
-            FeedButton.interactable = true;//In this scenario makes the feed chicken button interactable
+			FeedButton.interactable = true;//In this scenario makes the feed chicken button interactable
         }
         else { FeedButton.interactable = false; }//else it's not
 
 
-            if (isNight == true) 
+        if (isNight == true) 
 		{
 			chickensOut = false;
 			nightTime ();
@@ -131,14 +154,27 @@ public class gameManager : MonoBehaviour {
 
 	void dayTime ()
 	{
-		if (isDay == true && chickensOut == false && clockScript.whichDay >0) 
+		DayTimeRemaining.gameObject.SetActive(true); 
+		if(timerCount>=5)
+		{
+			for (int x = 0; x <6; x++)
+			{
+				Instantiate (chicken, new Vector3 (0,0,0), Quaternion.identity);
+			}
+			timerCount = 0;
+		}
+		else if (isDay == true && chickensOut == false && clockScript.whichDay >0) 
 		{
 			Instantiate (chicken, new Vector3 (0, 0, 0), Quaternion.identity);
 			chickensOut = true;
 			money = money - 20;
             money -= UpKeepCosts;
+			timerCount++;
+
 
 		}
+		ChangeViewSize (5);
+
 		
 			
 	}
@@ -146,6 +182,7 @@ public class gameManager : MonoBehaviour {
 
 	void nightTime ()
 	{
+		DayTimeRemaining.gameObject.SetActive(false);
 		if (isNight == true && baboonsOut == false)
 		{
             int Direction = Random.Range(1,4); //Chooses direction
@@ -163,7 +200,7 @@ public class gameManager : MonoBehaviour {
 
 			baboonsOut = true;
 
-           
+			ChangeViewSize(20);
               
 		}
 	}
@@ -173,21 +210,43 @@ public class gameManager : MonoBehaviour {
     }
     void WallText()//Sets the text on the wall buttons
     {
-        if(Walls[0] == null) { WallUpText.text = "Buy Wall (8 Rupees, 10 Health)"; }
-        if (Walls[1] == null) { WallDownText.text = "Buy Wall (8 Rupees, 10 Health)"; }
-        if (Walls[2] == null) { WallRightText.text = "Buy Wall (8 Rupees, 10 Health)"; }
-        if (Walls[3] == null) { WallLeftText.text = "Buy Wall (8 Rupees, 10 Health)"; }
+		if (money > 0) 
+		{
+			if (Walls [0] == null) {
+				WallUpText.text = "Buy Wall (8 Rupees, 10 Health)";
+			}
+			if (Walls [1] == null) {
+				WallDownText.text = "Buy Wall (8 Rupees, 10 Health)";
+			}
+			if (Walls [2] == null) {
+				WallRightText.text = "Buy Wall (8 Rupees, 10 Health)";
+			}
+			if (Walls [3] == null) {
+				WallLeftText.text = "Buy Wall (8 Rupees, 10 Health)";
+			}
 
-        if (Walls[0] != null) { WallUpText.text = "Upgrade/Repair Wall (8 Rupees, 10 Health)"; }
-        if (Walls[1] != null) { WallDownText.text = "Upgrade/Repair Wall (8 Rupees, 10 Health)"; }
-        if (Walls[2] != null) { WallRightText.text = "Upgrade/Repair Wall (8 Rupees, 10 Health)"; }
-        if (Walls[3] != null) { WallLeftText.text = "Upgrade/Repair Wall (8 Rupees, 10 Health)"; }
+			if (Walls [0] != null) {
+				WallUpText.text = "Upgrade/Repair Wall (8 Rupees, 10 Health)";
+			}
+			if (Walls [1] != null) {
+				WallDownText.text = "Upgrade/Repair Wall (8 Rupees, 10 Health)";
+			}
+			if (Walls [2] != null) {
+				WallRightText.text = "Upgrade/Repair Wall (8 Rupees, 10 Health)";
+			}
+			if (Walls [3] != null) {
+				WallLeftText.text = "Upgrade/Repair Wall (8 Rupees, 10 Health)";
+			}
+		}
 
 
     }
     public void BuyFeed() {
-        feedAmount++;
-        money--;
+		if (money >= 1) {
+
+			feedAmount++;
+			money--;
+		}
     }
     public void ResetButton() { Application.LoadLevel(0); }
     public void FeedChickens() {
@@ -196,6 +255,8 @@ public class gameManager : MonoBehaviour {
     }
     public void BuyUpgradeWall(int WallNum)//Un finished function for buying and upgrading walls
     {
+		if(money > 8)
+		{
         if(WallNum == 0)//Top Wall
         {
 
@@ -253,6 +314,8 @@ public class gameManager : MonoBehaviour {
             }
             money = money - 8; 
         }
+		}
+	
     }
     void WallButtonControll()
     {
@@ -272,6 +335,15 @@ public class gameManager : MonoBehaviour {
             WallButtonManager[3].interactable = false;
 
         }
+		if (money <=8)
+		{
+			WallButtonManager[0].interactable = false;
+			WallButtonManager[1].interactable = false;
+			WallButtonManager[2].interactable = false;
+			WallButtonManager[3].interactable = false;
+
+		}
+
 
     }
     public void UpdateConsole(string Line1, string Line2, string Line3)
@@ -294,8 +366,12 @@ public class gameManager : MonoBehaviour {
     void TimeManager()
     {
        
-        if(Ct.hoursinday > 19) { DayTimeRemaining.gameObject.SetActive(false); isNight = true; ChangeViewSize(20); }
-        if(Ct.hoursinday < 19) { DayTimeRemaining.gameObject.SetActive(true); isNight = false; ChangeViewSize(5); }
+        if(Ct.hoursinday > 19) { DayTimeRemaining.gameObject.SetActive(false); 
+
+			ChangeViewSize(20); }
+        if(Ct.hoursinday < 19) { DayTimeRemaining.gameObject.SetActive(true); 
+
+			ChangeViewSize(5); }
         DayTimeRemaining.value = (int) Ct.hoursinday;
 
     }
