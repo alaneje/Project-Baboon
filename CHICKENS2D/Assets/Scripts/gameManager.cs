@@ -202,7 +202,6 @@ public class gameManager : MonoBehaviour {
             if (Walls[0] == null)//Checks if the walls around, if it is then it just needs upgrading
             {
                 Walls[0] = Instantiate(Wall, new Vector2(0, 3), Quaternion.identity) as GameObject;//makes the wall
-                Walls[0].gameObject.tag = "WallTop";//Tags the wall
             }
             else
             {
@@ -216,7 +215,6 @@ public class gameManager : MonoBehaviour {
             if (Walls[1] == null)
             {
                 Walls[1] = Instantiate(Wall, new Vector2(0, -3), Quaternion.identity) as GameObject;
-                Walls[1].gameObject.tag = "WallUpgradeBottom";
             }
             else
             {
@@ -232,7 +230,6 @@ public class gameManager : MonoBehaviour {
             if (Walls[2] == null)
             {
                 Walls[2] = Instantiate(Wall, new Vector2(3, 0), Quaternion.Euler(0, 0, 90)) as GameObject;
-                Walls[2].gameObject.tag = "WallUpgradeRight";
             }
             else
             {
@@ -247,7 +244,7 @@ public class gameManager : MonoBehaviour {
             if (Walls[3] == null)
             {
                 Walls[3] = Instantiate(Wall, new Vector2(-3, 0), Quaternion.Euler(0, 0, 90)) as GameObject;
-                Walls[3].gameObject.tag = "WallUpgradeLeft";
+
             }
             else
             {
@@ -297,8 +294,8 @@ public class gameManager : MonoBehaviour {
     void TimeManager()
     {
        
-        if(Ct.hoursinday > 19) { DayTimeRemaining.gameObject.SetActive(false); }
-        if(Ct.hoursinday < 19) { DayTimeRemaining.gameObject.SetActive(true); }
+        if(Ct.hoursinday > 19) { DayTimeRemaining.gameObject.SetActive(false); isNight = true; ChangeViewSize(20); }
+        if(Ct.hoursinday < 19) { DayTimeRemaining.gameObject.SetActive(true); isNight = false; ChangeViewSize(5); }
         DayTimeRemaining.value = (int) Ct.hoursinday;
 
     }
