@@ -55,7 +55,9 @@ public class gameManager : MonoBehaviour {
     private bool GameOverA;
     private float CTimer;
     public Camera Cam;
-    
+    public double seconds;
+    public double minutes;
+    public double hours;
     public clockScript Ct;
     // Use this for initialization
     void Start () {
